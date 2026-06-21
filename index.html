@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Restaurant Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- html2pdf for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+
+<body>
+    <!-- Top Bar: Dark Mode and Admin Login -->
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>Restaurant Management System</h1>
+        <div>
+            <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+            <button id="adminLoginBtn" onclick="toggleAdminLogin()">Admin Login</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Admin Only: Add Menu Item -->
+        <div class="admin-only" id="addMenuSection" style="display: none;">
+            <h2>Add Menu Item</h2>
+            <input type="text" id="itemName" placeholder="Item Name">
+            <input type="number" id="itemPrice" placeholder="Price">
+            <input type="number" id="itemStock" placeholder="Stock">
+            <button class="success-btn" onclick="addMenuItem()">Add Item</button>
+            <hr>
+        </div>
+
+        <h2>Menu</h2>
+        <input type="text" id="searchInput" placeholder="Search Menu..." onkeyup="searchMenu()" style="width: calc(100% - 22px);">
+        <div id="menuList"></div>
+        <hr>
+
+        <h2>Reserve Table</h2>
+        <input type="text" id="customerName" placeholder="Customer Name">
+        <input type="number" id="tableNumber" placeholder="Table Number">
+        <button class="success-btn" onclick="reserveTable()">Reserve</button>
+        <div id="reservationList"></div>
+        <hr>
+
+        <h2>Orders & Billing</h2>
+        <div id="orderList"></div>
+        <hr>
+
+        <!-- Admin Only: Sales Report -->
+        <div class="admin-only" id="salesReportSection" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2>Sales Report</h2>
+                <button onclick="exportReportPDF()">Export PDF</button>
+            </div>
+            <div id="salesReport"></div>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <h3>Admin Login</h3>
+            <input type="password" id="adminPassword" placeholder="Enter Password (admin)">
+            <br>
+            <button class="success-btn" onclick="loginAdmin()">Login</button>
+            <button class="danger-btn" onclick="closeModal()">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Customer Bill Modal -->
+    <div id="billModal" class="modal">
+        <div class="modal-content" style="max-width: 300px;">
+            <div id="billPrintArea" style="text-align: left; padding: 10px;">
+                <h3 style="text-align: center; margin-top: 0;">Restaurant Receipt</h3>
+                <hr style="border: 1px dashed #ccc;">
+                <p style="margin: 5px 0;"><strong>Item:</strong> <span id="billItemName" style="float: right;"></span></p>
+                <p style="margin: 5px 0;"><strong>Price:</strong> <span style="float: right;">₹<span id="billItemPrice"></span></span></p>
+                <p style="margin: 5px 0;"><strong>GST (18%):</strong> <span style="float: right;">₹<span id="billGST"></span></span></p>
+                <hr style="border: 1px dashed #ccc;">
+                <h3 style="text-align: right; margin-bottom: 0;">Total: ₹<span id="billTotal"></span></h3>
+                <p style="text-align: center; font-size: 12px; margin-top: 20px; color: #777;">Thank you for dining with us!</p>
+            </div>
+            <button class="success-btn" onclick="printBill()">Print Bill</button>
+            <button class="danger-btn" onclick="closeBillModal()">Close</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
